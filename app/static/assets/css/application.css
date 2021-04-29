@@ -1,0 +1,57 @@
+@import url(//fonts.googleapis.com/css?family=Open+Sans:300,400,600,700);
+body {
+  font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-weight: 300;
+}
+
+td {
+  border: 1px solid grey;
+  cursor: pointer;
+  width: 50px;
+  height: 50px;
+}
+
+td:hover {
+  background-color: #ddd;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-weight: 300;
+}
+
+p {
+  font-weight: 300;
+}
+button, input, optgroup, select, textarea {
+  color: black;
+}
+.font-normal {
+  font-weight: 400;
+}
+.font-semi-bold {
+  font-weight: 600;
+}
+.font-bold {
+  font-weight: 700;
+}
+.template {
+  margin-top: 50px;
+}
+
+.card {
+  margin-top: 20px;
+}
+
+.rules {
+  margin-top: 20px;
+}
+
+.btn{
+  margin-top: 5px;
+}

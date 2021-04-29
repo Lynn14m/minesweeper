@@ -21,14 +21,17 @@ class Square(models.Model):
     id = models.AutoField(primary_key=True)
     row = models.PositiveIntegerField()
     column = models.PositiveIntegerField()
-    revealed = models.BooleanField()
-    flagged = models.BooleanField()
+    revealed = models.BooleanField(default=False)
+    clickable = models.BooleanField(default=True)
+    flagged = models.BooleanField(default=False)
     value = models.IntegerField()
 
     grid = models.ForeignKey(Grid, on_delete=models.CASCADE)
     mine = models.OneToOneField(
         Mine,
-        on_delete=models.CASCADE
+        on_delete=models.CASCADE,
+        blank=True,
+        null=True
     )
 
     class Meta:

@@ -19,9 +19,18 @@ from app import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+
     path('api/grid', views.GridList.as_view()),
     path('api/grid/<int:pk>', views.GridDetail.as_view()),
     path('api/grid/detailed', views.GridDetail.as_view()),
+
+    path('api/square', views.SquareList.as_view()),
+    path('api/square/<int:pk>', views.SquareDetail.as_view()),
+    path('api/square/detailed', views.SquareDetail.as_view()),
+
+    path('api/mine', views.MineList.as_view()),
+    path('api/mine/<int:pk>', views.MineDetail.as_view()),
+    path('api/mine/detailed', views.MineDetail.as_view()),
 ]
 
 urlpatterns += [
