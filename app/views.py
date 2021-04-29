@@ -80,7 +80,7 @@ class MineList(APIView):
     def get(self, request, format=None):
         mines = Mine.objects.all()
 
-        serializer = MineSerializer(mines)
+        serializer = MineSerializer(mines, many=True)
 
         return Response(serializer.data, status=status.HTTP_200_OK)
 
@@ -124,7 +124,7 @@ class MineDetail(APIView):
         return Response(status=status.HTTP_204_NO_CONTENT)
 
 
-class SqaureList(APIView):
+class SquareList(APIView):
     """
     List all Squares or create new Squares
     """
@@ -133,7 +133,7 @@ class SqaureList(APIView):
     def get(self, request, format=None):
         squares = Square.objects.all()
 
-        serializer = MineSerializer(squares)
+        serializer = MineSerializer(squares, many=True)
 
         return Response(serializer.data, status=status.HTTP_200_OK)
 
@@ -152,7 +152,7 @@ class SquareDetail(APIView):
     """
     def get_object(self, id):
         try:
-            return Mine.objects.get(id=id)
+            return Square.objects.get(id=id)
         except:
             raise Http404
 
