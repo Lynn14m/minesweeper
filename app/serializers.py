@@ -1,20 +1,15 @@
 from rest_framework import serializers
-from app.models import Grid, Mine, Square
+from app.models import Grid, Square
 
 
 class GridSerializer(serializers.ModelSerializer):
     class Meta:
         model = Grid
-        fields = ['id', ]
-
-
-class MineSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Mine
-        fields = ['id', 'grid', 'value']
+        fields = ['id', 'rows_count', 'columns_count', 'mines_count']
 
 
 class SquareSerializer(serializers.ModelSerializer):
     class Meta:
         model = Square
-        fields = ['id', 'row', 'column', 'revealed', 'flagged', 'value', 'grid', 'mine']
+        fields = ['id', 'grid', 'row', 'column', 'revealed', 'clickable', 'flagged', 'is_known', 'is_safe',
+                  'is_mine', 'value']

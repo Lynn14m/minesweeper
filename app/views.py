@@ -7,9 +7,9 @@ from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt
 from django.http import Http404
 
-from app.models import Grid, Mine, Square
-from app.serializers import GridSerializer, MineSerializer, SquareSerializer
-
+from app.models import Grid, Square
+from app.serializers import GridSerializer, SquareSerializer
+from app.game_logic import init_grid
 
 class FrontEnd(View):
     @method_decorator(csrf_exempt)
@@ -71,59 +71,6 @@ class GridDetail(APIView):
         return Response(status=status.HTTP_204_NO_CONTENT)
 
 
-class MineList(APIView):
-    """
-    List all Mines or create new Mine
-    """
-
-    @method_decorator(csrf_exempt)
-    def get(self, request, format=None):
-        mines = Mine.objects.all()
-
-        serializer = MineSerializer(mines, many=True)
-
-        return Response(serializer.data, status=status.HTTP_200_OK)
-
-    @method_decorator(csrf_exempt)
-    def post(self, request, format=None):
-        serializer = MineSerializer(date=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-
-class MineDetail(APIView):
-    """
-    Retrieve, update or delete Mine
-    """
-    def get_object(self, id):
-        try:
-            return Mine.objects.get(id=id)
-        except:
-            raise Http404
-
-    @method_decorator(csrf_exempt)
-    def get(self, request, pk, format=None):
-        mine = self.get_object(pk)
-        serializer = MineSerializer(mine)
-        return Response(serializer.data)
-
-    def put(self, request, pk, format=None):
-        mine = self.get_object(pk)
-        serializer = MineSerializer(mine, data=request.data)
-
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-    def delete(self, request, pk, format=None):
-        mine = self.get_object(pk)
-        mine.delete()
-        return Response(status=status.HTTP_204_NO_CONTENT)
-
-
 class SquareList(APIView):
     """
     List all Squares or create new Squares
@@ -133,13 +80,13 @@ class SquareList(APIView):
     def get(self, request, format=None):
         squares = Square.objects.all()
 
-        serializer = MineSerializer(squares, many=True)
+        serializer = SquareSerializer(squares, many=True)
 
         return Response(serializer.data, status=status.HTTP_200_OK)
 
     @method_decorator(csrf_exempt)
     def post(self, request, format=None):
-        serializer = SquareSerializer(date=request.data)
+        serializer = SquareSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
@@ -157,12 +104,12 @@ class SquareDetail(APIView):
             raise Http404
 
     @method_decorator(csrf_exempt)
-    def get(self, request, pk, format=None):
-        square = self.get_object(pk)
+    def get(self, request):
+        square = Square.objects.get(row=request.headers['row'], column=request.headers['column'], grid=request.headers['grid'])
         serializer = SquareSerializer(square)
         return Response(serializer.data)
 
-    def put(self, request, pk, format=None):
+    def put(self, request, pk):
         square = self.get_object(pk)
         serializer = SquareSerializer(square, data=request.data)
 
@@ -171,7 +118,24 @@ class SquareDetail(APIView):
             return Response(serializer.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-    def delete(self, request, pk, format=None):
+    def delete(self, request, pk):
         square = self.get_object(pk)
         square.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
+
+
+class InitialiseSquares(APIView):
+    @method_decorator(csrf_exempt)
+    def post(self, request, format=None):
+        grid = Grid(rows_count=request.data['rowsCount'], columns_count=request.data['columnsCount'], mines_count=request.data['mineCount'])
+        grid.save()
+        grid_array = init_grid(grid)
+
+        for i in range(len(grid_array)):
+            for j in range(len(grid_array)):
+                value = grid_array[i][j]
+                print(grid_array)
+                square = Square(row=i, column=j, value=value, grid=grid)
+                square.save()
+        serializer = GridSerializer(grid)
+        return Response(serializer.data, status=status.HTTP_200_OK)
