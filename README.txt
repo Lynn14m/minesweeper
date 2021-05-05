@@ -6,7 +6,9 @@ Pre-requisites:
     - Ideally Chrome or Firefox
 
 Step 1.
-    From the project root run the following command:
+    From the project root run the following command (depending on your python installation):
+        pip3 install -r requirements.txt
+        OR
         pip install -r requirements.txt
 
 Step 2.
