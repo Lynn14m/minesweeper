@@ -1,0 +1,33 @@
+<div layout="row" ng-cloak>
+    <div layout="column" flex="40">
+        <md-card flex="100">
+            <md-card-title>
+              <md-card-title-text>
+                <span class="md-headline">New game</span>
+              </md-card-title-text>
+            </md-card-title>
+            <md-card-content>
+              <form ng-submit="goToEasyGame()">
+                <div layout="row" layout-align="center center">
+                    <md-button type="submit" class="md-primary">Easy: 4x4 with 3 mines</md-button>
+                </div>
+              </form>
+              <hr/>
+              <form ng-submit="goToMediumGame()">
+                <div layout="row" layout-align="center center">
+                    <md-button type="submit" class="md-primary">Medium: 7x7 with 7 mines</md-button>
+                </div>
+              </form>
+              <hr/>
+              <form ng-submit="goToHardGame()">
+                  <div layout="row" layout-align="center center">
+                    <md-button type="submit" class="md-primary">Hard: 9x9 with 10 mines</md-button>
+                  </div>
+              </form>
+            </md-card-content>
+        </md-card>
+    </div>
+    <div flex="100">
+        <ui-view></ui-view>
+    </div>
+</div>

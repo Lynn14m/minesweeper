@@ -28,9 +28,7 @@ urlpatterns = [
     path('api/square/<int:pk>', views.SquareDetail.as_view()),
     path('api/square/detailed', views.SquareDetail.as_view()),
 
-    path('api/mine', views.MineList.as_view()),
-    path('api/mine/<int:pk>', views.MineDetail.as_view()),
-    path('api/mine/detailed', views.MineDetail.as_view()),
+    path('api/initialise', views.InitialiseSquares.as_view()),
 ]
 
 urlpatterns += [
