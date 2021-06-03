@@ -134,7 +134,6 @@ class InitialiseSquares(APIView):
         for i in range(len(grid_array)):
             for j in range(len(grid_array)):
                 value = grid_array[i][j]
-                print(grid_array)
                 square = Square(row=i, column=j, value=value, grid=grid)
                 square.save()
         serializer = GridSerializer(grid)

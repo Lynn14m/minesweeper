@@ -20,8 +20,6 @@ def init_grid(grid):
 
         grid_array[mine_location[0], mine_location[1]] = -1
 
-        print(grid_array[mine_location[0], mine_location[1]])
-
         mines -= 1
 
     # place numbers onto board based on the number of mines in the neighbouring locations
